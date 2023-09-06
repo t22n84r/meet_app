@@ -111,9 +111,9 @@ When user wants to see all upcoming events
 Then user can see a chart showing the upcoming events in each city so that they know what events are organized in which city
 
 ### Serverless implementation
-Function 1: Handle user sign-up/sign-in using OAuth 2.0 for the Google Calendar API.
-Function 2: A function to query the Google Calendar API and filter events by the city.
-Function 3: Sync cached events if the internet connection was lost and then re-established.
-Function 4: Aggregate event data into a format suitable for charting. For instance, counting the number of events per city.
-Function 5: Data Preparation for 2 Chart Types. One that shows how many events will take place in each location (via a scatterplot), and
+- Function 1: Handle user sign-up/sign-in using OAuth 2.0 for the Google Calendar API.
+- Function 2: A function to query the Google Calendar API and filter events by the city.
+- Function 3: Sync cached events if the internet connection was lost and then re-established.
+- Function 4: Aggregate event data into a format suitable for charting. For instance, counting the number of events per city.
+- Function 5: Data Preparation for 2 Chart Types. One that shows how many events will take place in each location (via a scatterplot), and
 another that visualizes the popularity of event genres (via a pie chart).

@@ -9,9 +9,7 @@ const EventList = ({events}) => {
       const value = e.target.value;
       
       // Allow empty strings and numbers greater than or equal to 0
-      if (value === "" || (!isNaN(value) && value >= 0)) {
-        seteventsCount(value);
-      }
+      (value === "" || (!isNaN(value) && value >= 0)) && seteventsCount(value);
    };
 
    return (

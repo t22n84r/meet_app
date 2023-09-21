@@ -4,7 +4,7 @@ const Event = ({event, index}) => {
 
    return (
 
-      <li>
+      <li className="event">
          <Accordion>
             <Accordion.Item eventKey={index}>
                <Accordion.Header>Summary: {event.summary}</Accordion.Header>

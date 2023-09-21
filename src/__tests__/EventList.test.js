@@ -3,16 +3,18 @@ import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import EventList from '../components/EventList';
 import { getEvents } from '../api';
+import MeetApp from '../App';
 
-describe('EventList component', () => {
+describe('<EventList /> component', () => {
 
    let EventListComponent;
    let allEvents;
    beforeEach(async () => {
-      
-      allEvents = await getEvents();
-      EventListComponent = render(<EventList events={allEvents}/>);
-   })
+      await act(async () => {
+         allEvents = await getEvents();
+         EventListComponent = render(<EventList events={allEvents}/>);
+      });
+   });   
 
    test('it renders null when no events are passed', () => {
       
@@ -32,7 +34,7 @@ describe('EventList component', () => {
       expect(screen.getAllByRole('listitem')).toHaveLength(allEvents.length);
    });*/
 
-   // feauture 2 tests
+   // feature 2 tests
    test('it contains a button with text that includes "Summary:"', () => {
       
       const accordionHeaders = screen.getAllByText(/Summary:/i);
@@ -42,7 +44,7 @@ describe('EventList component', () => {
       });
    });
 
-   // feauture 2 tests
+   // feature 2 tests
    test('it contains a button with with class collapsed', () => {
 
       const accordionButtons = screen.getAllByRole('button');
@@ -53,7 +55,7 @@ describe('EventList component', () => {
       });
    });
 
-   // feauture 2 tests
+   // feature 2 tests
    test('with a button click expands to show details of events', async () => {
 
       const user = userEvent.setup();
@@ -78,7 +80,7 @@ describe('EventList component', () => {
       expect(accordionButtons[0]).toHaveClass('collapsed');
    });
 
-   // feauture 3 tests
+   // feature 3 tests
    test('renders 32 events by default', () => {
 
       expect(screen.getAllByRole('listitem')).toHaveLength(32);
@@ -87,20 +89,29 @@ describe('EventList component', () => {
       expect(inputElemByPlaceholder).toHaveValue(32);
    });
 
-   // feauture 3 tests
+   // feature 3 tests
    test('renders number of events that user wants', async () => {
 
       const user = userEvent.setup();
 
       const inputElemByPlaceholder = screen.getByPlaceholderText('Events count to display...');
       await act(async () => {
-         await userEvent.clear(inputElemByPlaceholder);
-         await userEvent.type(inputElemByPlaceholder, '10');
+         await user.clear(inputElemByPlaceholder);
+         await user.type(inputElemByPlaceholder, '10');
+         fireEvent.change(inputElemByPlaceholder);
       });
 
-      fireEvent.change(inputElemByPlaceholder);
-
       expect(screen.getAllByRole('listitem')).toHaveLength(10);
+   });
+});
 
+describe('<EventList /> integration', () => {
+
+   test('renders a list of 32 events when the app is mounted and rendered', async () => {
+
+      render(<MeetApp />);
+      await waitFor(() => {
+         expect(screen.getAllByRole('listitem')).toHaveLength(32);
+      });
    });
 });

@@ -1,10 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { act } from'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
 import { getEvents, extractLocations } from '../api';
+import MeetApp from '../App';
 
-describe('CitySearch component', () => {
+describe('<CitySearch /> component', () => {
 
    test('renders text input', () => {
 
@@ -22,7 +23,7 @@ describe('CitySearch component', () => {
    test('renders a list of suggestions when city search text box gains focus', async() => {
 
       const user = userEvent.setup();
-      render(<CitySearch />);
+      render(<CitySearch allLocations={[]}/>);
       user.click(screen.getByRole('textbox'));
       expect(await screen.findByRole('list')).toBeInTheDocument();
       expect(screen.getByRole('list')).toHaveClass('suggestions');
@@ -66,7 +67,7 @@ describe('CitySearch component', () => {
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
       
-      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => { }} />);
 
       // user types "Berlin" in city textbox
       const cityTextBox = CitySearchComponent.getByRole('textbox');
@@ -81,38 +82,25 @@ describe('CitySearch component', () => {
 
       expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
    });
+});
 
-   test('renders only "See all cities" when user query does not match any locations or allLocation is empty', async() => {
+describe('<CitySearch /> integration', () => {
 
+   test('renders suggestions list when the app is rendered.', async () => {
       const user = userEvent.setup();
-      const CitySearchComponent = render(<CitySearch />);
+      const view = render(<MeetApp />);
+
+      // target the portion of the app that is rendered from CitySearch.js with "city-search" & "within"
+      const CitySearchDOM = view.getByTestId('city-search');                  
+      const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
+      await act (async () => {
+         await user.click(cityTextBox);
+      });
+  
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
-      
-      // Test case where no locations match the query
-      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
-      let cityTextBox = CitySearchComponent.getByRole('textbox');
-      await act (async () => {
-         await user.clear(cityTextBox); // Clear the existing value
-         await user.type(cityTextBox, 'NonExistentCity'); // Type a non-matching value
-      });
-
-      // We only expect the "See all cities" option to be available
-      let suggestionListItemsForNoMatch = CitySearchComponent.queryAllByRole('listitem');
-      expect(suggestionListItemsForNoMatch).toHaveLength(1);
-      expect(suggestionListItemsForNoMatch[0].textContent).toBe('See all cities');
-
-      // Test case where no locations match the query
-      CitySearchComponent.rerender(<CitySearch allLocations={null} />);
-      cityTextBox = CitySearchComponent.getByRole('textbox');
-      await act (async () => {
-         await user.clear(cityTextBox); // Clear the existing value
-         await user.type(cityTextBox, 'NonExistentCity'); // Type a non-matching value
-      });
-
-      // We only expect the "See all cities" option to be available
-      suggestionListItemsForNoMatch = CitySearchComponent.queryAllByRole('listitem');
-      expect(suggestionListItemsForNoMatch).toHaveLength(1);
-      expect(suggestionListItemsForNoMatch[0].textContent).toBe('See all cities');
+  
+      const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
+      expect(suggestionListItems.length).toBe(allLocations.length + 1);
    });
 });

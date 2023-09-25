@@ -27,7 +27,7 @@ const EventList = ({events}) => {
             />
          </div>
 
-         <ul data-testid="event-list">
+         <ul data-testid="event-list" className="events">
             {events? events.slice(0, eventsCount).map((event, index) => <Event key={event.id} event={event} index={index} />) : null}
          </ul>
       </div>

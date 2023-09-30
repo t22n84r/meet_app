@@ -36,7 +36,7 @@ describe('<CitySearch /> component', () => {
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
       
-      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => { }} setInfoAlert={() => { }} />);
 
       // user types "Berlin" in city textbox
       const cityTextBox = CitySearchComponent.getByRole('textbox');
@@ -46,13 +46,12 @@ describe('<CitySearch /> component', () => {
 
 
       // filter allLocations to locations matching "Berlin"
-      const suggestions = allLocations ? allLocations.filter((location) => {
-
-         return location.toUpperCase().includes(cityTextBox.value.toUpperCase());
-      }) : [];
+      const suggestions = allLocations ? allLocations.filter((location) => { return location.toUpperCase().includes(cityTextBox.value.toUpperCase())}) : [];
 
       // get all <li> elements inside the suggestion list
-      const suggestionListItems = CitySearchComponent.getAllByRole('listitem');
+      const searchResults = screen.getByTestId('city-search-suggestionList');
+      const suggestionListItems = within(searchResults).getAllByRole('listitem');
+
       expect(suggestionListItems).toHaveLength(suggestions.length + 1);
       
       for (let i = 0; i < suggestionListItems.length - 1; i += 1) {
@@ -67,7 +66,7 @@ describe('<CitySearch /> component', () => {
       const allEvents = await getEvents();
       const allLocations = extractLocations(allEvents);
       
-      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => { }} />);
+      CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => { }} setInfoAlert={() => { }} />);
 
       // user types "Berlin" in city textbox
       const cityTextBox = CitySearchComponent.getByRole('textbox');

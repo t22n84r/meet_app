@@ -30,19 +30,7 @@ input[type="number"] {
   margin-bottom: 20px;
 }
 
-.city {
-  width: 250px;
-}
-
-#city-search {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  position: relative;
-}
-
 .suggestions {
-  width: 250px;
   position: absolute;
   top: 45px;
   z-index: 2;

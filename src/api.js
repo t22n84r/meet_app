@@ -44,10 +44,21 @@ const removeQuery = () => {
  *
  * This function will fetch the list of all events
 **/
-export const getEvents = async () => {
+export const getEvents = async (offlineCallback = null) => {
 
    if (window.location.href.startsWith('http://localhost')) {
       return mockData;
+   }
+
+   if (!navigator.onLine) {
+      const events = localStorage.getItem("lastEvents");
+
+      // Call the callback function if provided
+      if (offlineCallback) {
+         offlineCallback();
+      }
+
+      return events?JSON.parse(events):[];
    }
 
    const token = await getAccessToken();
@@ -60,6 +71,7 @@ export const getEvents = async () => {
      const result = await response.json();
 
      if (result && result.data && result.data.items) {
+      localStorage.setItem("lastEvents", JSON.stringify(result.data.items));
       return result.data.items;   
      } else return null; 
    }

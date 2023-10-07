@@ -27,7 +27,7 @@ const EventList = ({events}) => {
 
       <div>
          <div className="d-flex justify-content-center align-items-center my-3">
-            <label htmlFor="eventsDisplaycount" className="form-label mx-2">Number events to display</label>
+            <label htmlFor="eventsDisplaycount" className="form-label mx-2">Number of events to display</label>
             <input
                type="number"
                className="form-control w-auto"
@@ -40,8 +40,8 @@ const EventList = ({events}) => {
             {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
          </div>
 
-         <ul data-testid="event-list" className="events">
-            {events? events.slice(0, eventsCount).map((event, index) => <Event key={event.id} event={event} index={index} />) : null}
+         <ul data-testid="event-list" className="events list-group">
+         {events? events.slice(0, eventsCount).map((event, index) => <Event key={event.id} event={event} index={index} />) : null}
          </ul>
       </div>
    );

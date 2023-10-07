@@ -3,6 +3,8 @@ import { loadFeature, defineFeature } from 'jest-cucumber';
 import userEvent from '@testing-library/user-event';
 import MeetApp from '../App';
 
+jest.mock('recharts');
+
 const feature = loadFeature('./src/features/specifyNumberofEvents.feature');
 
 defineFeature(feature, test => {

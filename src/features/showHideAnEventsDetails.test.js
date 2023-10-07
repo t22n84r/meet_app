@@ -1,7 +1,10 @@
 import { render, act, screen, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import { loadFeature, defineFeature } from 'jest-cucumber';
 import userEvent from '@testing-library/user-event';
 import MeetApp from '../App';
+
+jest.mock('recharts');
 
 const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
 
@@ -58,9 +61,9 @@ defineFeature(feature, test => {
          expect(accordionButtons[0]).not.toHaveClass('collapsed');
 
          await waitFor(() => {
-            const element = screen.getAllByText(/Starting time:/i);
+            const element = screen.getAllByText(/Description:/i);
             expect(element[0]).toBeInTheDocument();
-            expect(element[0].parentElement).toHaveClass('accordion-collapse show');
+            expect(element[0].closest('.accordion-collapse')).toHaveClass('show');
          });
       });
    });
@@ -86,9 +89,9 @@ defineFeature(feature, test => {
          expect(accordionButtons[0]).not.toHaveClass('collapsed');
 
          await waitFor(() => {
-            const element = screen.getAllByText(/Starting time:/i);
+            const element = screen.getAllByText(/Description:/i);
             expect(element[0]).toBeInTheDocument();
-            expect(element[0].parentElement).toHaveClass('accordion-collapse show');
+            expect(element[0].closest('.accordion-collapse')).toHaveClass('show');
          });
       });
       

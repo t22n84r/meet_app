@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event';
 import { getEvents } from '../api';
 import MeetApp from '../App';
 
+jest.mock('recharts');
+
 const feature = loadFeature('./src/features/filterEventsByCity.feature');
 
 defineFeature(feature, test => {

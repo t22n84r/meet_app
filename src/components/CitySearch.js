@@ -36,7 +36,7 @@ const CitySearch = ({allLocations=[], setCurrentCity, setInfoAlert}) => {
 
    return (
 
-      <div data-testid="city-search" className="city-search" >
+      <div data-testid="city-search" className="city-search my-3" >
          <input type="text" className="city" placeholder="Search for a city" value={query} 
          onFocus={() => setshowSuggestions(true)}
          onChange={handleInputChange}

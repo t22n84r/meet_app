@@ -3,7 +3,10 @@ import EventList from './components/EventList'
 import CitySearch from './components/CitySearch';
 import { getEvents, extractLocations } from './api';
 import { InfoAlert, WarningAlert } from './components/Alert';
+import CityEventsChart from './components/CityEventsChart';
+import EventGenresChart from './components/EventGenresChart';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Row, Col } from 'react-bootstrap';
 import './App.css';
 
 const MeetApp = () => {
@@ -37,10 +40,20 @@ const MeetApp = () => {
   return (
     <div className='MeetApp'>
 
-      <div className="d-flex justify-content-start align-items-center">
+      <div className="d-flex justify-content-center align-items-center">
         <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} setInfoAlert={setInfoAlert} />
         {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
         {warningAlert.length ? <WarningAlert text={warningAlert}/> : null}
+      </div>
+      <div className="charts-container">
+        <Row>
+          <Col md={8}>
+            <CityEventsChart allLocations={allLocations} events={events} />
+          </Col>
+          <Col md={4}>
+            <EventGenresChart events={events} />
+          </Col>
+        </Row>
       </div>
       <EventList events={events}/>
       

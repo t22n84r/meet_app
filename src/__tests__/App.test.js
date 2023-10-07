@@ -4,6 +4,8 @@ import { act } from 'react-dom/test-utils';
 import MeetApp from '../App';
 import { getEvents } from '../api';
 
+jest.mock('recharts');
+
 describe('<MeetApp /> component', () => {
 
    beforeEach(async () => {

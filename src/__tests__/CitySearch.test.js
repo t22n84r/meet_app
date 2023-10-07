@@ -5,6 +5,8 @@ import CitySearch from '../components/CitySearch';
 import { getEvents, extractLocations } from '../api';
 import MeetApp from '../App';
 
+jest.mock('recharts');
+
 describe('<CitySearch /> component', () => {
 
    test('renders text input', () => {

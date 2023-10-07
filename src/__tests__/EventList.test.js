@@ -5,6 +5,8 @@ import EventList from '../components/EventList';
 import { getEvents } from '../api';
 import MeetApp from '../App';
 
+jest.mock('recharts');
+
 describe('<EventList /> component', () => {
 
    let EventListComponent;
@@ -68,9 +70,9 @@ describe('<EventList /> component', () => {
       expect(accordionButtons[0]).not.toHaveClass('collapsed');
 
       await waitFor(() => {
-         const element = screen.getAllByText(/Starting time:/i);
+         const element = screen.getAllByText(/Description:/i);
          expect(element[0]).toBeInTheDocument();
-         expect(element[0].parentElement).toHaveClass('accordion-collapse show');
+         expect(element[0].closest('.accordion-collapse')).toHaveClass('show');
       });
 
       await act (async () => {

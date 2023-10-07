@@ -1,0 +1,9 @@
+.accordion-button.collapsed{
+   background-color: #443C68 !important;
+   color: #00C49F !important;
+}
+
+.accordion-body {
+   background-color: #393053;
+   color: #CFE2FF;
+}

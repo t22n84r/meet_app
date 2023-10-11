@@ -36,18 +36,18 @@ const CitySearch = ({allLocations=[], setCurrentCity, setInfoAlert}) => {
 
    return (
 
-      <div data-testid="city-search" className="city-search my-3" >
+      <div data-testid="city-search" className="city-search mt-3" >
          <input type="text" className="city" placeholder="Search for a city" value={query} 
          onFocus={() => setshowSuggestions(true)}
          onChange={handleInputChange}
          />
 
          { showSuggestions ?
-            <ul className="suggestions mt-5" data-testid="city-search-suggestionList">
+            <ul className="suggestions mt-2 list-group position-absolute z-2" data-testid="city-search-suggestionList">
                {suggestions.map(suggestion => {
-                  return <li key={suggestion} onClick={handleSuggestionClick}> {suggestion}</li>
+                  return <li className="list-group-item p-2" key={suggestion} onClick={handleSuggestionClick}> {suggestion}</li>
                })}
-               <li key='See all cities' onClick={handleSuggestionClick}>
+               <li className="list-group-item p-2" key='See all cities' onClick={handleSuggestionClick}>
                   <b>See all cities</b>
                </li>
             </ul> : null }

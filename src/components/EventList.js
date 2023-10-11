@@ -40,7 +40,7 @@ const EventList = ({events}) => {
             {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
          </div>
 
-         <ul data-testid="event-list" className="events list-group">
+         <ul data-testid="event-list" className="events list-group pb-5">
          {events? events.slice(0, eventsCount).map((event, index) => <Event key={event.id} event={event} index={index} />) : null}
          </ul>
       </div>

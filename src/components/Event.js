@@ -30,7 +30,7 @@ const Event = ({event, index}) => {
                   <strong><u>Description:</u></strong> {event.description}<br />
                   <strong><u>Starting time:</u></strong> {toLocalTime(event.start.dateTime)}<br />
                   <strong><u>Ending time:</u></strong> {toLocalTime(event.end.dateTime)}<br />
-                  <strong><u>Google calendar link:</u></strong> <a href={event.htmlLink} target="_blank" rel="noopener noreferrer">{event.htmlLink}</a>
+                  <a href={event.htmlLink} target="_blank" rel="noopener noreferrer"><strong><u>Google calendar link</u></strong></a>
                </Accordion.Body>
             </Accordion.Item>
          </Accordion>
